@@ -44,7 +44,7 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
     FVector LineTraceEnd = PlayerViewPointLoacation + PlayerViewPointRotation.Vector() * Reach;
 
     /// Draw a red trace in the world to visualise
-    DrawDebugLine(GetWorld(),
+    /*DrawDebugLine(GetWorld(),
                   PlayerViewPointLoacation,
                   LineTraceEnd,
                   FColor(255, 0, 0),
@@ -52,6 +52,7 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
                   0.f,
                   0.f,
                   10.f);
+    */
     
     /// setup query parameters
     FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
