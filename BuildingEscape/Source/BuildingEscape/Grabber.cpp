@@ -34,22 +34,16 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
-	// get player view point
+	/// get player view point
     FVector PlayerViewPointLoacation;
     FRotator PlayerViewPointRotation;
     GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
         OUT PlayerViewPointLoacation,
         OUT PlayerViewPointRotation);
     
-    // TODO: log out for testing
-//    UE_LOG(LogTemp, Warning, TEXT("Location: %s Position: %s"),
-//           *PlayerViewPointLoacation.ToString(),
-//           *PlayerViewPointRotation.ToString());
-//
-    
     FVector LineTraceEnd = PlayerViewPointLoacation + PlayerViewPointRotation.Vector() * Reach;
 
-    // Draw a red trace in the world to visualise
+    /// Draw a red trace in the world to visualise
     DrawDebugLine(GetWorld(),
                   PlayerViewPointLoacation,
                   LineTraceEnd,
@@ -58,8 +52,23 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
                   0.f,
                   0.f,
                   10.f);
-    // ray-cast out to reach distance
     
-    // see what we hit
+    /// setup query parameters
+    FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
+    
+    /// line trace (AKA ray-cast) out to reach distance
+    FHitResult Hit;
+    GetWorld()->LineTraceSingleByObjectType(OUT Hit,
+                                            PlayerViewPointLoacation,
+                                            LineTraceEnd,
+                                            FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
+                                            TraceParameters);
+    
+    /// see what we hit
+    AActor* ActorHit = Hit.GetActor();
+    if (ActorHit)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Line trace hit: %s."), *(ActorHit->GetName()));
+    }
 }
 
