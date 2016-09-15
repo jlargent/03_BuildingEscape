@@ -30,7 +30,7 @@ private:
     float CloseAngle = 90.0f;
     UPROPERTY(EditAnywhere)
     ATriggerVolume* PressurePlate;
-    float MassToOpenDoor = 50.f;
+    float MassToOpenDoor = 30.f;
     
     UPROPERTY(EditAnywhere)
     float DoorClosedDelay = 0.5f;
